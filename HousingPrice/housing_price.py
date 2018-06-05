@@ -30,6 +30,12 @@ for train_index,test_index in split.split(housing,housing['income_cat']):
     #strat_test_set.drop('income_cat',axis=1,inplace=True)
 for sets in (strat_train_set,strat_test_set):
     sets.drop('income_cat',axis=1,inplace=True)
+#correaltion
+housing['rooms_per_household']=housing['total_rooms']/housing['households']
+housing['population_per_household']=housing['population']/housing['households']
+housing['bedrooms_per_room']=housing['total_bedrooms']/housing['total_rooms']
+corr=housing.corr()
+corr['median_house_value'].sort_values(ascending=False)
 
 housing.plot(x="latitude", y="longitude", kind="scatter")
 housing.plot(x="latitude", y="longitude", kind="scatter",alpha=0.1)
@@ -41,4 +47,13 @@ sampleTestSet=strat_test_set.copy()
 import pandas as pd
 
 sampleTestSet.plot(kind='scatter',x="longitude", y="latitude",alpha=0.1)
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+from pandas.tools.plotting import scatter_matrix
+housing_array=['median_income','median_house_value','housing_median_age']
+scatter_matrix(sampleTestSet[housing_array],figsize=(12,8))
+
+
+
+
 
